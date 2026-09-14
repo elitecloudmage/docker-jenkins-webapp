@@ -1,2 +1,1 @@
-Testing jenkins webhook trigger.
-Did it work?!
+# 2 tier web app using Docker + Jenkins and a MySQL database
