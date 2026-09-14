@@ -1,3 +1,4 @@
+# this is an AI generated script of a URL shortener, there might be bugs, this is only for testing.
 import os
 import time
 
