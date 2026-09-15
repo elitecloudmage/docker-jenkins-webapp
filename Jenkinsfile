@@ -5,16 +5,10 @@ pipeline {
         ECR_REGISTRY = '588957334147.dkr.ecr.us-east-1.amazonaws.com'
         IMAGE_NAME   = 'docker-jenkins-webapp'
         AWS_REGION   = 'us-east-1'
+        DEPLOY_HOST  = 'ec2-user@18.225.55.198'
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }  
-
-        
+    
         stage('Docker Build') {
             steps {
                 sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
@@ -23,7 +17,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'docker run --rm $IMAGE_NAME:$BUILD_NUMBER pytest || echo "No tests found — pipeline validation only, add real tests before merging to main"'
+                sh 'docker run --rm $IMAGE_NAME:$BUILD_NUMBER pytest'
             }
         }
 
@@ -37,5 +31,19 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy') {
+          steps {
+            sshagent(['ec2-ssh-key-id']) {
+              sh '''
+                  ssh -o StrictHostKeyChecking=no $DEPLOY_HOST "
+                      cd ~/2tier-webapp && \
+                      docker compose pull && \
+                      docker compose up -d
+                        "
+                '''
+             }
+           }
+        }
     }
-}
+
