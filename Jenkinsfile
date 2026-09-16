@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        ECR_REGISTRY = '588957334147.dkr.ecr.us-east-1.amazonaws.com'
-        IMAGE_NAME   = 'docker-jenkins-webapp'
+        ECR_REGISTRY = '588957334147.dkr.ecr.us-east-2.amazonaws.com'
+        IMAGE_NAME   = '2tier-webapp-ecr'
         AWS_REGION   = 'us-east-1'
         DEPLOY_HOST  = 'ec2-user@18.225.55.198'
     }
