@@ -43,6 +43,7 @@ pipeline {
                         
                         ssh -o StrictHostKeyChecking=no $DEPLOY_HOST "
                             cd ~/2tier-webapp && \
+                            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY && \
                             export ECR_IMAGE=$ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME && \
                             docker compose pull && \
                             docker compose up -d
