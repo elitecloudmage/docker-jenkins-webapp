@@ -1,3 +1,3 @@
 # AWS Jenkins Webapp
 
-Testing the deploy stage now
+Testing the new version tag for pushing to ECR and Deployments
