@@ -7,8 +7,7 @@ Fundamentally, this is a URL shortener application hosted on a t3.large instance
 The core goal of this project was to understand what a tech stack is and how it operates.
 
 
-[[!Watch the Demo](https://youtu.be/nj49glZ7fck)](https://youtu.be/nj49glZ7fck)
-
+[![Watch the demo](https://img.youtube.com/vi/nj49glZ7fck/maxresdefault.jpg)](https://www.youtube.com/watch?v=nj49glZ7fck)
 
 ## Tech Stack
 
