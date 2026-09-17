@@ -4,7 +4,7 @@ A simple, complete CI/CD setup running a two-tier web application on a single AW
 
 Fundamentally, this is a URL shortener application hosted on a t3.large instance that has Jenkins and Docker installed on the root volume alongside a containerized MySQL database.
 
-The core goal of this project was to understand what a tech stack is and how it operates.
+The core goal of this project was to understand what a tech stack is and how it operates, so if you'd like to see the demo, click the image below:
 
 
 [![Watch the demo](https://img.youtube.com/vi/nj49glZ7fck/maxresdefault.jpg)](https://www.youtube.com/watch?v=nj49glZ7fck)
@@ -13,10 +13,10 @@ The core goal of this project was to understand what a tech stack is and how it 
 
 | Tool | Role in Project |
 |---|---|
-| **Flask** | The web application backend (URL shortener). Kept minimal to focus on pipeline mechanics. |
+| **Flask** | The web application backend (URL shortener). |
 | **MySQL 8.0** | Runs as a Compose service using the official Docker image with a persistent named volume. |
-| **Docker & Compose** | Manages the local two-service stack (`compose.yaml`). Web builds via Dockerfile; DB pulls official MySQL image. |
-| **Jenkins** | Self-hosted on the host instance. Runs a declarative `Jenkinsfile` triggered by GitHub webhooks. |
+| **Docker & Compose** | Manages the local two-service stack (`compose.yaml`). Web builds via Dockerfile; DB pulls official MySQL image from ECR. |
+| **Jenkins** | Self-hosted on the host instance. Runs a declarative `Jenkinsfile`, triggered by GitHub webhooks. |
 | **Amazon ECR** | Private AWS image registry holding tagged production builds. |
 | **AWS EC2 / IAM** | Single t3.large instance using an IAM Instance Profile for seamless ECR authentication without static access keys. |
 
@@ -24,14 +24,15 @@ The core goal of this project was to understand what a tech stack is and how it 
 
 ### State & Persistence
 
-MySQL's data survives every redeploy because it lives in a Docker named volume mounted on the host:
+MySQL's data survives every redeploy because it lives in a Docker named 'volume' mounted on the host:
 
 ```yaml
 volumes:
   - mysql-data:/var/lib/mysql
 ```
 
-Amazon ECR holds the built web application images. The MySQL data persists strictly on the EC2 instance inside the Docker named volume and never leaves it. ECR acts as the image registry, not application data storage.
+- Amazon ECR holds the built web application images. 
+- The MySQL data persists strictly on the EC2 instance inside the Docker named volume and never leaves it. 
 
 ### Core Files
 
@@ -85,4 +86,4 @@ sudo systemctl restart jenkins
 
 **5. ECR Integration & Deployment**
 
-- Ensure your `Jenkinsfile` on your instance runs `aws ecr get-login-password` to authenticate against ECR before running `docker compose up -d` and `docker compose down`.  
+- Ensure your `Jenkinsfile` on your instance runs `aws ecr get-login-password` first to authenticate against ECR before running `docker compose up -d` and `docker compose down`.  
