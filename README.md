@@ -9,6 +9,7 @@ The core goal of this project was to understand what a tech stack is and how it 
 
 [![Watch the demo](https://img.youtube.com/vi/nj49glZ7fck/maxresdefault.jpg)](https://www.youtube.com/watch?v=nj49glZ7fck)
 
+
 ## Tech Stack
 
 | Tool | Role in Project |
